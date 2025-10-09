@@ -1,61 +1,46 @@
-version: '3.9'
+
 
 services:
-  web:
-    build: .
-    image: smstudio
-    container_name: smstudio
-    restart: always
-    command: "python manage.py runserver 0.0.0.0:8001"
-    links:
-      - db 
-    volumes:
-      - ./smstudio:/app/www/smstudio
-    ports:
-      - "8001:8000"
-    environment:
-      - DEBUG=1
-      - DB_HOST=db
-      - DB_NAME=${DATABASE_NAME}
-      - DB_USER=${DATABASE_USER}
-      - DB_PASSWORD=${DATABASE_PASSWORD}
-      - DB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
-      - DB_PORT=${DATABASE_PORT}
-    depends_on:
-      - db
-    networks:
-      - app_network
-
-  # adminer:
-  #   image: adminer
-  #   container_name: adminer
-  #   ports:
-  #     - "8080:8080"
-  #   links:
-  #     - db
-  #   networks:
-  #     - app_network
-  #   depends_on:
-  #     - db
-
   db:
     image: mysql:8.0
-    container_name: mysql
+    container_name: smstudio-db
+    restart: always
     environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_USER: ${DATABASE_USER}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_:/var/lib/mysql
     ports:
       - "3307:3306"
-    networks:
-      - app_network
+    command: --default-authentication-plugin=mysql_native_password
+
+  pgdb:
+    image: postgres:15
+    container_name: smstudio-pgdb
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - pgdb_:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+    
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - pgdb
+ 
 
 volumes:
-  mysql_data:
-
-networks:
-  app_network:
-    driver: bridge
+  mysql_:
+  pgdb_:

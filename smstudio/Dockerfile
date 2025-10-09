@@ -1,30 +1,25 @@
-# Используем официальный образ Python 3.11
+# Dockerfile
 FROM python:3.11-slim
 
+# Установка переменных окружения
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Создаём рабочую директорию
-WORKDIR /app
-RUN pip install --no-cache-dir --upgrade pip
-
+# Установка зависимостей системы
 RUN apt-get update && apt-get install -y \
     gcc \
     default-libmysqlclient-dev \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Копируем requirements.txt и устанавливаем зависимости
+# Установка директории приложения
+WORKDIR /app
+
+# Копируем зависимости
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем весь код проекта
+# Копируем всё приложение
 COPY . .
 
-
-
-# Экспортируем порт и указываем команду по умолчанию
-EXPOSE 8000
-
+CMD  python manage.py runserver 0.0.0.0:8000
