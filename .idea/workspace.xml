@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="644f4a49-dc95-4073-869d-349970f09ec2" name="Changes" comment="add docker files">
+    <list default="true" id="644f4a49-dc95-4073-869d-349970f09ec2" name="Changes" comment="add docker files1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/smstudio/.env" beforeDir="false" afterPath="$PROJECT_DIR$/smstudio/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/smstudio/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/smstudio/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/smstudio/compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/smstudio/compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/smstudio/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/smstudio/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/smstudio/smstudio/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/smstudio/smstudio/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smstudio/smstudio/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/smstudio/smstudio/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,10 +21,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AnreX73&quot;
+  }
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AnreX73/smart.git&quot;,
-    &quot;accountId&quot;: &quot;60908e25-9deb-4958-93ae-e0df6936e244&quot;
+    &quot;accountId&quot;: &quot;63a3e3c7-413a-428e-9045-d564dca65e06&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -36,13 +42,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -67,11 +73,20 @@
       <option name="project" value="LOCAL" />
       <updated>1758710404828</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add docker files1">
+      <option name="closed" value="true" />
+      <created>1759993673406</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759993673406</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add docker files" />
-    <option name="LAST_COMMIT_MESSAGE" value="add docker files" />
+    <MESSAGE value="add docker files1" />
+    <option name="LAST_COMMIT_MESSAGE" value="add docker files1" />
   </component>
 </project>
