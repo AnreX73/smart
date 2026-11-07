@@ -1,8 +1,10 @@
 .env
 .env.*
 !.env.example
+!.env.deploy.example
 .git
 .gitignore
+.gitattributes
 .idea
 .vscode
 .venv
@@ -12,9 +14,11 @@ venv
 .ruff_cache
 .pytest_cache
 media
+static
 staticfiles
-db.sqlite3
+*.sqlite3
 backup
+certbot
 *.log
 Dockerfile
 compose*.yml

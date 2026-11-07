@@ -10,12 +10,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv()
+
+
+def env_bool(name, default=False):
+    return os.getenv(name, str(default)).strip().lower() in ("1", "true", "yes", "on")
+
+
+def env_list(name, default=""):
+    return [item.strip() for item in os.getenv(name, default).split(",") if item.strip()]
+
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False").lower() in ("1", "true", "yes")
+DEBUG = env_bool("DEBUG", False)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1")
+
+# Нужно для POST-запросов админки, когда сайт открыт по HTTPS (Django 4+).
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
 
 # Application definition
 
@@ -64,23 +77,26 @@ WSGI_APPLICATION = 'smstudio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.getenv("DATABASE_NAME"),
-#         'USER': os.getenv("DATABASE_USER"),
-#         'PASSWORD':os.getenv("DATABASE_PASSWORD"),
-#         'HOST': os.getenv("DATABASE_HOST","localhost"),
-#         'PORT': os.getenv("DATABASE_PORT",3306),
-#     }
-#
-# }
+# Локально используется SQLite (db.sqlite3).
+# На сервере в .env.deploy задаётся DATABASE_ENGINE=mysql — тогда работает MySQL из compose.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+if os.getenv("DATABASE_ENGINE", "sqlite").strip().lower() == "mysql":
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv("DATABASE_NAME", "_smart"),
+        'USER': os.getenv("DATABASE_USER", ""),
+        'PASSWORD': os.getenv("DATABASE_PASSWORD", ""),
+        'HOST': os.getenv("DATABASE_HOST", "db"),
+        'PORT': os.getenv("DATABASE_PORT", "3306"),
+        'OPTIONS': {'charset': 'utf8mb4'},
+        'CONN_MAX_AGE': 60,
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -191,7 +207,10 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 CKEDITOR_5_FILE_STORAGE = "smart.storage.CKEditor5Storage"
 CKEDITOR_5_MAX_FILE_SIZE = 10
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+# За nginx: реальная схема запроса передаётся в X-Forwarded-Proto.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Включать через .env.deploy, когда сайт уже реально открывается по HTTPS.
+SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", False)
+SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE", False)
+CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", False)
