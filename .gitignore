@@ -14,6 +14,7 @@ db.sqlite3
 smstudio/media/
 /staticfiles/
 backup/
+smstudio/data/
 
 # Environment
 .env
