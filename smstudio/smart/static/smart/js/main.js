@@ -204,3 +204,64 @@ if (document.querySelector('.post-modal__cross')){
 
 });
 
+/* ==========================================================
+   Переключатель темы
+   ========================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+  var root = document.documentElement;
+  var toggle = document.getElementById('theme-toggle');
+  if (!toggle) {
+    return;
+  }
+
+  var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+  function applyTheme(theme) {
+    var isDark = theme === 'dark';
+
+    root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    root.style.colorScheme = isDark ? 'dark' : 'light';
+
+    toggle.setAttribute('aria-pressed', String(isDark));
+    toggle.setAttribute('aria-label', isDark ? 'Включить светлую тему' : 'Включить тёмную тему');
+    toggle.title = isDark ? 'Светлая тема' : 'Тёмная тема';
+
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', isDark ? '#14110e' : '#f9f5e6');
+    }
+  }
+
+  applyTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+
+  toggle.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+
+    applyTheme(next);
+
+    try {
+      localStorage.setItem('theme', next);
+    } catch (e) {}
+  });
+
+  /* Следуем за системной темой, пока пользователь не выбрал вручную */
+  if (window.matchMedia) {
+    var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    var onSystemThemeChange = function (event) {
+      var stored = null;
+      try {
+        stored = localStorage.getItem('theme');
+      } catch (e) {}
+
+      if (stored !== 'dark' && stored !== 'light') {
+        applyTheme(event.matches ? 'dark' : 'light');
+      }
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', onSystemThemeChange);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(onSystemThemeChange);
+    }
+  }
+});

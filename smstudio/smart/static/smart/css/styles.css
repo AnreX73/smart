@@ -960,3 +960,234 @@ max-width:100%;
 }
 /*конец страница контакты*/
 
+/* ==========================================================
+   ТЕМА ОФОРМЛЕНИЯ
+   ========================================================== */
+:root {
+  --page-text: #14100c;
+  --accent: #F56700;
+  --accent-soft: rgba(247, 215, 170, .2);
+  --accent-soft-hover: rgba(247, 215, 170, .28);
+  --surface: #ffffff;
+  --surface-2: #eeeae3;
+  --surface-hover: rgba(0, 0, 0, .05);
+  --border-soft: rgba(0, 0, 0, .12);
+  --muted: rgba(0, 0, 0, .5);
+  --muted-2: rgba(0, 0, 0, .2);
+  --overlay: rgba(0, 0, 0, .5);
+  --shadow-modal: 0 3px 10px -.5px rgba(0, 0, 0, .2);
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --page-text: #f2ece3;
+  --accent: #ff8a2b;
+  --accent-soft: rgba(255, 138, 43, .10);
+  --accent-soft-hover: rgba(255, 138, 43, .16);
+  --surface: #1e1a16;
+  --surface-2: #262019;
+  --surface-hover: rgba(255, 255, 255, .055);
+  --border-soft: rgba(255, 255, 255, .13);
+  --muted: rgba(242, 236, 227, .62);
+  --muted-2: rgba(242, 236, 227, .32);
+  --overlay: rgba(0, 0, 0, .7);
+  --shadow-modal: 0 10px 40px rgba(0, 0, 0, .65);
+  color-scheme: dark;
+}
+
+body {
+  color: var(--page-text);
+}
+
+a {
+  color: var(--page-text);
+}
+
+/* Плавная смена темы для основных поверхностей */
+body,
+.nav_wrapper,
+.mini_nav_wrapper,
+.margin-div,
+.post-modal,
+.gallery-modal,
+.extracontent,
+.price-footer-menu,
+.contacts-footer-item,
+th,
+td,
+.theme-toggle {
+  -webkit-transition: background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease;
+  -o-transition: background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease;
+  transition: background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+/*  Кнопка переключения темы */
+.theme-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 15;
+  width: 48px;
+  height: 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
+  color: #3b2a1a;
+  border: 1px solid var(--border-soft);
+  -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition: background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease, -webkit-transform .2s ease;
+  -o-transition: background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease, transform .2s ease;
+  transition: background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease, transform .2s ease;
+}
+
+.theme-toggle:hover {
+  -webkit-transform: translateY(-2px) scale(1.04);
+  -ms-transform: translateY(-2px) scale(1.04);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-toggle__icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+/* В светлой теме показываем луну (переход в тёмную), в тёмной — солнце */
+html[data-theme="light"] .theme-toggle__icon--sun {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle__icon--moon {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle {
+  background: var(--surface-2);
+  color: var(--accent);
+  border-color: var(--border-soft);
+  -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, .5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, .5);
+}
+
+/*  Тёмная тема  */
+html[data-theme="dark"] .nav_wrapper,
+html[data-theme="dark"] .mini_nav_wrapper,
+html[data-theme="dark"] .price-footer-menu,
+html[data-theme="dark"] .contacts-footer-item {
+  background-color: var(--surface-hover);
+  -webkit-box-shadow: 0 0 8px 8px var(--accent-soft) inset;
+  box-shadow: 0 0 8px 8px var(--accent-soft) inset;
+}
+
+html[data-theme="dark"] .nav_item:hover,
+html[data-theme="dark"] .menu-item:hover {
+  background-color: var(--surface-hover);
+  -webkit-box-shadow: 0 0 8px 8px var(--accent-soft-hover) inset;
+  box-shadow: 0 0 8px 8px var(--accent-soft-hover) inset;
+}
+
+html[data-theme="dark"] .margin-div {
+  background: #14110e;
+}
+
+html[data-theme="dark"] .post-overlay,
+html[data-theme="dark"] .gallery-overlay {
+  background-color: var(--overlay);
+}
+
+html[data-theme="dark"] .post-modal,
+html[data-theme="dark"] .gallery-modal {
+  background: var(--surface);
+  -webkit-box-shadow: var(--shadow-modal);
+  box-shadow: var(--shadow-modal);
+}
+
+html[data-theme="dark"] .post-modal__content > a {
+  color: #ffa45c;
+}
+
+html[data-theme="dark"] .post-modal__cross {
+  fill: var(--accent);
+}
+
+html[data-theme="dark"] .extracontent {
+  background: var(--surface-2);
+  border-color: var(--border-soft);
+  -webkit-box-shadow: var(--shadow-modal);
+  box-shadow: var(--shadow-modal);
+}
+
+html[data-theme="dark"] .extra-title,
+html[data-theme="dark"] .extra-paragraph {
+  color: var(--page-text);
+}
+
+html[data-theme="dark"] .close-extra,
+html[data-theme="dark"] .left-arrow,
+html[data-theme="dark"] .right-arrow {
+  color: var(--accent);
+}
+
+html[data-theme="dark"] .item-title > span {
+  color: var(--muted-2);
+}
+
+html[data-theme="dark"] .item-gallery-link,
+html[data-theme="dark"] .price-link {
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .swiper-pagination-bullet {
+  background-color: rgba(242, 236, 227, .35);
+  opacity: 1;
+}
+
+html[data-theme="dark"] .swiper-pagination-bullet-active {
+  background-color: var(--accent);
+}
+
+html[data-theme="dark"] th {
+  background: rgba(255, 138, 43, .28);
+}
+
+html[data-theme="dark"] td {
+  background: rgba(255, 138, 43, .12);
+}
+
+html[data-theme="dark"] .swiper-button-prev,
+html[data-theme="dark"] .swiper-button-next {
+  color: var(--accent);
+}
+
+/* Карта в тёмной теме выглядит уместнее в инвертированных тонах */
+html[data-theme="dark"] .map iframe,
+html[data-theme="dark"] .mini-map iframe {
+  -webkit-filter: invert(92%) hue-rotate(180deg) contrast(.9);
+  filter: invert(92%) hue-rotate(180deg) contrast(.9);
+}
+
+@media (max-width: 533px) {
+  .theme-toggle {
+    right: 14px;
+    bottom: 14px;
+    width: 44px;
+    height: 44px;
+  }
+}
+

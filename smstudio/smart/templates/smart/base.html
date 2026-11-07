@@ -1,23 +1,59 @@
 {% load static %}
 
 
-<html lang="en">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{% static 'smart/images/favicon.ico' type="image/x-icon" %}"/>
+    <meta name="theme-color" content="#f9f5e6" />
+    <link rel="shortcut icon" href="{% static 'smart/images/favicon.ico' %}" type="image/x-icon"/>
+    <script>
+        // Применяем сохранённую тему до отрисовки страницы (без мигания)
+        (function () {
+            var theme = null;
+            try {
+                theme = localStorage.getItem('theme');
+            } catch (e) {}
+            if (theme !== 'dark' && theme !== 'light') {
+                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <link rel="stylesheet" href="{% static 'smart/css/swiper-bundle.css' %}"/>
     <link type="text/css" rel="stylesheet" href="{% static 'smart/css/styles.css' %}"/>
 </head>
 <body>
 <style>
    body {
-    background-image: url("{% static 'smart/images/bg.jpg' %}"); /* Путь к фоновому изображению */
-
+    background-image: var(--page-bg-image); /* Путь к фоновому изображению */
+    background-repeat: repeat;
+   }
+   :root {
+    --page-bg-image: url("{% static 'smart/images/bg.jpg' %}");
+   }
+   html[data-theme="dark"] body {
+    background-image: linear-gradient(rgba(12, 10, 8, .90), rgba(12, 10, 8, .95)), var(--page-bg-image);
    }
 </style>
+<button class="theme-toggle" type="button" id="theme-toggle" aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">
+    <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
 <div class="all_content_wrapper">
 
 {% block content %}
